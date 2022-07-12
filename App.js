@@ -12,6 +12,7 @@ import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 import MainTabs from './app/screens/MainTabs';
+import SingleNewsScreen from "./app/screens/SingleNewsScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,12 @@ export default function App() {
           component={MainTabs}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="SingleNewsScreen"
+          component={SingleNewsScreen}
+          options={{ headerShown: false }}
+        />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,6 +1,14 @@
 import React from "react";
 
-import { Text, View, Button, StyleSheet, ActivityIndicator, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -20,7 +28,7 @@ const BottomTab = createBottomTabNavigator();
 
 
 
-function MainTabs(props)  {
+function MainTabs({ navigation }) {
   return (
     <BottomTab.Navigator
       screenOptions={({ route }) => ({
@@ -32,7 +40,7 @@ function MainTabs(props)  {
             // iconName = focused ? 'information-circle' : 'information-circle-outline';
           } else if (route.name === "ScheduleScreen") {
             iconName = focused ? "list-circle" : "list-circle-outline";
-          } 
+          }
 
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -41,20 +49,25 @@ function MainTabs(props)  {
         tabBarInactiveTintColor: "gray",
       })}
     >
-{/* component={() => <NewsScreen navigator={navigator} />} */}
-      <BottomTab.Screen name="NewsScreen"  >
-        {props => <NewsScreen {...props}/>}
-      </BottomTab.Screen>
-      <BottomTab.Screen name="ScheduleScreen"  >
-        {props => <ScheduleScreen {...props}/>}
-      </BottomTab.Screen>
-      {/* <BottomTab.Screen name="ScheduleScreen" component={() => <ScheduleScreen navigator={navigator} />} /> */}
+      {/* component={() => <NewsScreen navigator={navigator} />} */}
 
+
+      <BottomTab.Screen name="NewsScreen" component={NewsScreen} options={{ title: "News", headerShown: false }} />
+      <BottomTab.Screen name="ScheduleScreen" component={ScheduleScreen} />
+
+
+      {/* <BottomTab.Screen name="NewsScreen">
+        {(props) => <NewsScreen {...props} />}
+      </BottomTab.Screen>
+      <BottomTab.Screen name="ScheduleScreen">
+        {(props) => <ScheduleScreen {...props} />}
+      </BottomTab.Screen> */}
+
+
+
+      {/* <BottomTab.Screen name="ScheduleScreen" component={() => <ScheduleScreen navigator={navigator} />} /> */}
     </BottomTab.Navigator>
   );
 }
 
 export default MainTabs;
-
-
-
