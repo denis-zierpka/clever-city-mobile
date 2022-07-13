@@ -26,6 +26,7 @@ export default function App() {
           component={MainTabs}
           options={{ headerShown: false }}
         />
+        {/* Моё тут */}
         <Stack.Screen
           name="SingleNewsScreen"
           component={SingleNewsScreen}
