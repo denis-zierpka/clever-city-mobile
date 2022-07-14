@@ -16,11 +16,16 @@ import SingleNewsScreen from "./app/screens/SingleNewsScreen";
 import EventRegistrationScreen from "./app/screens/EventRegistration";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import SingleRegistrationScreen from "./app/screens/SingleRegistration";
+import PushNotifications from "./app/components/PushNotifications";
 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  useEffect(() => {
+    //PushNotifications();
+  }, [])
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

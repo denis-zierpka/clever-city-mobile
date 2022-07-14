@@ -61,7 +61,6 @@ function SingleRegistrationScreen({navigation}) {
       <ScrollView {...scrollHandler} style={{paddingLeft: 8, paddingRight: 8}}>
         <Image source={{
           uri: 'https://cdnn21.img.ria.ru/images/07e6/06/18/1797844556_0:247:936:773_1920x0_80_0_0_548a6a160d24192f53e4cc0ef6a8bbdd.jpg',
-          width: '100%',
           height: 210,
         }}/>
 

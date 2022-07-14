@@ -6,7 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput, TouchableHighlight,
+  TextInput, TouchableHighlight, TouchableOpacity,
   TouchableWithoutFeedback,
   View
 } from "react-native";
@@ -42,32 +42,67 @@ const styles = StyleSheet.create({
   }
 });
 
+function Player({login, name, status, setParticipantList, participantList, sir_name}) {
+  function handleDeleteUser() {
+    let copy = [...participantList]
+    copy.map((elem, index) => {
+      if (login === elem.login) {
+        copy.splice(index, 1);
+      }
+    })
+    setParticipantList(copy);
+  }
+
+  return (<>
+      <View style={{
+        display: 'flex', flexDirection: 'row', width: '100%',
+        justifyContent: 'space-between'
+      }}>
+        <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 8}}>
+          {name + ' ' + sir_name}
+        </Text>
+        <TouchableOpacity onPress={handleDeleteUser}>
+          <View style={{marginTop: 8}}>
+          <FontAwesomeIcon color={'#9a9a9a'} icon={faXmark} size={24}/>
+          </View>
+        </TouchableOpacity>
+      </View>
+      {
+        status !== 1 ? <Text style={{color: '#109696', marginTop: 8}}>Приглашение принято</Text> :
+          <Text style={{color: 'orange', marginTop: 8}}>Участнику нужно подтвердить участие</Text>
+      }
+      <View
+        style={{
+          marginTop: 4,
+          borderBottomColor: '#c4c2c2',
+          borderBottomWidth: StyleSheet.hairlineWidth,
+          marginRight: -8
+        }}
+      />
+    </>
+  );
+}
+
 const TeamSpecified = () => {
   const [newParticipant, setNewParticipant] = React.useState("");
-
-  function Player() {
-    return (<>
-        <View style={{
-          display: 'flex', flexDirection: 'row', width: '100%',
-          justifyContent: 'space-between'
-        }}>
-          <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 8}}>
-            Мастинен Никита
-          </Text>
-          <FontAwesomeIcon color={'#737373'} icon={faXmark} size={24}/>
-        </View>
-        <Text style={{color: '#109696', marginTop: 8}}>Приглашение принято</Text>
-        <View
-          style={{
-            marginTop: 4,
-            borderBottomColor: '#c4c2c2',
-            borderBottomWidth: StyleSheet.hairlineWidth,
-            marginRight: -20
-          }}
-        />
-      </>
-    );
-  }
+  const [teamName, setNewTeamName] = React.useState("");
+  const [participantList, setParticipantList] = React.useState([
+    {
+      login: 'nik',
+      name: 'Nikita',
+      sir_name: 'Mastinen'
+    },
+    {
+      login: 'alf',
+      name: 'Alfred',
+      sir_name: 'Nurtdinov'
+    },
+    {
+      login: 'den',
+      name: 'Denis',
+      sir_name: 'Zierpka'
+    }
+  ]);
 
   return (
     <>
@@ -95,10 +130,9 @@ const TeamSpecified = () => {
             borderColor: 'lightgrey',
             // width: '100%',
           }}
-          onChangeText={() => {
-          }}
+          onChangeText={setNewTeamName}
+          value={teamName}
 
-          value={'Команда орленок'}
           placeholder="Пригласить участника"
         />
       </View>
@@ -131,12 +165,18 @@ const TeamSpecified = () => {
         ...styles.container, marginTop: 8, paddingTop: 16,
         paddingBottom: 16, paddingLeft: 16, paddingRight: 8
       }}>
-        <Player/>
-        <Player/>
-        <Player/>
-        <Player/>
-        <Player/>
-
+        {
+          participantList.map((elem, index) => {
+           return (
+             <Player
+               key={index}
+               {...elem}
+               participantList={participantList}
+               setParticipantList={setParticipantList}
+             />
+            );
+          })
+        }
 
         {/*</SafeAreaView>*/}
       </View>
@@ -251,7 +291,6 @@ const LotOfTeams = () => {
 
 function EventRegistrationScreen({navigator}) {
   const {scrollHandler} = useInputScrollHandler({extraScrollHeight: 64});
-
 
 
   return (
