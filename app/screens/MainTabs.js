@@ -63,7 +63,7 @@ function MainTabs({ navigation }) {
         component={ResultsScreen}
         options={{ title: "Результаты", headerShown: true }}
       />
-      <BottomTab.Screen name="ScheduleScreen" component={ScheduleScreen} />
+      <BottomTab.Screen name="ScheduleScreen" component={ScheduleScreen} options={{title: "Расписание", headerShown: true}}/>
       <BottomTab.Screen name={'ParticipateScreen'} component={ParticipateScreen} options={{title: "Участие", headerShown: true}}/>
 
 
