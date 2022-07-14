@@ -20,15 +20,15 @@ import {
   NavigationContainer,
   validatePathConfig,
 } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { news_data } from "../TestData";
-import { useState, useEffect } from "react";
+import {news_data} from "../TestData";
+import {useState, useEffect} from "react";
 
 const availableFilters = [
   "бадминтон",
@@ -59,7 +59,7 @@ const filterIcons = {
 
 LogBox.ignoreAllLogs();
 
-function NewsScreen({ navigation }) {
+function NewsScreen({navigation}) {
   const [filterList, setFilterList] = useState([]);
 
   //----------- start request block --------------
@@ -132,7 +132,7 @@ function NewsScreen({ navigation }) {
               marginBottom: 4,
               color: "#ffffff",
               borderStyle: "solid",
-              borderWidth: 2,
+              borderWidth: 1,
               borderColor: "#109696",
               backgroundColor: checkIfExists(item) ? "#109696" : "transparent",
               alignContent: "center",
@@ -172,31 +172,56 @@ function NewsScreen({ navigation }) {
   }
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View style={{flex: 1}}>
       <View style={styles.page}>
         <ScrollView>
           {/*<View style={styles.titleView}>*/}
           {/*  <Text style={styles.titleText}>Новости</Text>*/}
           {/*</View>*/}
-          <View style={styles.filterButtonHolder}>{renderButtons()}</View>
+          <View style={{
+            ...styles.filterButtonHolder,
+            backgroundColor: 'white',
+            paddingTop: 16,
+            paddingBottom: 16,
+            paddingLeft: 8,
+            paddingRight: 8,
+            borderRadius: 8
+          }}>{renderButtons()}</View>
           {isLoading ? (
-            <ActivityIndicator style={styles.activityIndicator} />
+            <ActivityIndicator style={styles.activityIndicator}/>
           ) : (
             data.map((item, index) => {
               return (
                 <TouchableOpacity key={index} onPress={() => pressNews(item)}>
-                  <View style={styles.newsBox}>
-                    <Image
-                      style={{
-                        width: 40,
-                        height: 40,
-                      }}
-                      source={{
-                        uri: filterIcons[item.tag],
-                      }}
-                    />
-                    <Text style={styles.newsText}>{item.title}</Text>
+
+                  <View style={{
+                    backgroundColor: 'grey',
+                    marginLeft: 16,
+                    marginRight: 16, ...styles.container, ...styles.shadow,
+                    padding: 16,
+                    paddingLeft: 16,
+                    // alignItems: 'center',
+                    // alignContent: 'center'
+                  }}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                      <Text style={{...styles.newsText, width: '80%'}}>{item.title}</Text>
+                      <Image
+                        style={{
+                          width: 50,
+                          height: 50,
+                        }}
+                        source={{
+                          uri: filterIcons[item.tag],
+                        }}
+                      />
+                    </View>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 16}}>
+                      <Text style={{...styles.newsText, color: 'grey'}}>{'#плавание'}</Text>
+                      <Text style={{...styles.newsText, color: 'grey'}}>{'05.08 12:22'}</Text>
+                    </View>
                   </View>
+
+
                 </TouchableOpacity>
               );
             })
@@ -208,7 +233,7 @@ function NewsScreen({ navigation }) {
               </Text>
             </View>
           ) : (
-            <View />
+            <View/>
           )}
         </ScrollView>
       </View>
@@ -217,10 +242,30 @@ function NewsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 8,
+    marginLeft: 12,
+    marginRight: 12,
+    // padding: 10,
+    // paddingRight: 8,
+    borderRadius: 8,
+    backgroundColor: '#ffffff',
+
+  },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+  },
   page: {
     // marginTop: 50,
     flex: 1,
-    backgroundColor: "white",
+    //backgroundColor: "white",
   },
   titleView: {
     width: "100%",
@@ -237,13 +282,13 @@ const styles = StyleSheet.create({
     // width: "100%",
     height: 150,
     marginTop: 10,
-    padding: 20,
+    // padding: 20,
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 30,
   },
   newsText: {
-    padding: 10,
+    // padding: 10,
     fontSize: 16,
   },
   filterButtons: {
@@ -264,7 +309,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   filterButtonHolder: {
-    margin: 15,
+    margin: 12,
     // borderWidth: 1,
     // width: "100%",
     // height: 100,
