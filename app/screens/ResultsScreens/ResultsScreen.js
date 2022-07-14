@@ -34,9 +34,9 @@ function ResultsScreen({ navigation }) {
       <View style={styles.page}>
         <TopTab.Navigator>
           <TopTab.Screen
-            name="ResultsForYouScreen"
-            component={ResultsForYouScreen}
-            options={{ title: "Для вас", headerShown: false }}
+            name="ResultsAllScreen"
+            component={ResultsAllScreen}
+            options={{ title: "Все", headerShown: false }}
           />
           <TopTab.Screen
             name="ResultsYourScreen"
@@ -44,10 +44,11 @@ function ResultsScreen({ navigation }) {
             options={{ title: "Ваши", headerShown: false }}
           />
           <TopTab.Screen
-            name="ResultsAllScreen"
-            component={ResultsAllScreen}
-            options={{ title: "Все", headerShown: false }}
+            name="ResultsForYouScreen"
+            component={ResultsForYouScreen}
+            options={{ title: "Для вас", headerShown: false }}
           />
+
         </TopTab.Navigator>
       </View>
     </View>
@@ -56,7 +57,7 @@ function ResultsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   page: {
-    marginTop: StatusBar.currentHeight + 30,
+    marginTop: StatusBar.currentHeight,
     flex: 1,
     backgroundColor: "white",
   },
