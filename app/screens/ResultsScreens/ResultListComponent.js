@@ -114,31 +114,36 @@ const local_filteredResultsFromDatabase = [
 function ResultListComponent(props) {
   const [isLoadingPeopleList, setIsLoadingPeopleList] = useState(true);
   const [allContactsFromDatabase, setAllContactsFromDatabase] = useState([]);
-  const [searchPeopleTerm, setSearchPeopleTerm] = useState("");
+  const [searchPeopleTerm, setSearchPeopleTerm] = useState();
   const [foundPeopleList, setFoundPeopleList] = useState([]);
+  
+  if (props.state === "for_you") {
+    const getPeople = async () => {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8000/get_users/?left=0&right=1000"
+        );
+        const json = await response.json();
+        console.log(json);
+        setAllContactsFromDatabase(json.series);
+        setFoundPeopleList(allContactsFromDatabase);
+        setSearchPeopleTerm("");
+        console.log("Done setting");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoadingPeopleList(false);
+      }
+    };
 
-  const getPeople = async () => {
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:8000/get_users/?left=0&right=1000"
-      );
-      const json = await response.json();
-      console.log(json);
-      setAllContactsFromDatabase(json.series);
-      setFoundPeopleList(allContactsFromDatabase);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoadingPeopleList(false);
-    }
-  };
-
-  useEffect(() => {
-    getPeople();
-  }, []);
+    useEffect(() => {
+      getPeople();
+    }, []);
+  }
 
   // allContactsFromDatabase - all people (get from server)
   useEffect(() => {
+    console.log("Try to update after searchPeopleTerm changes");
     const newContacts = allContactsFromDatabase.filter(
       (contact) =>
         searchPeopleTerm === "" ||
