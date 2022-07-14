@@ -12,6 +12,8 @@ import {
   TextInput,
   TouchableOpacity,
   LogBox,
+  ImageBackground,
+  Image,
 } from "react-native";
 
 import {
@@ -29,15 +31,31 @@ import { news_data } from "../TestData";
 import { useState, useEffect } from "react";
 
 const availableFilters = [
-  "волейбол",
-  "баскетбол",
-  "гребля",
-  "плавание",
-  "теннис",
-  "борьба",
   "бадминтон",
+  "баскетбол",
+  "волейбол",
+  "плавание",
+  "шахматы",
+  "силовой экстрим",
+  "футбол",
+  "хоккей",
   "настольный теннис",
 ];
+
+const filterIcons = {
+  бадминтон: "https://cdn-icons-png.flaticon.com/512/2829/2829107.png",
+  баскетбол: "https://cdn-icons-png.flaticon.com/512/1584/1584021.png",
+  волейбол:
+    "https://img2.freepng.ru/20181113/wjf/kisspng-beach-volleyball-vector-graphics-volleyball-net-sp-volleyball-beach-ball-play-svg-png-icon-free-downl-5beb393eef9717.6236570815421422709814.jpg",
+  плавание:
+    "https://cdn.icon-icons.com/icons2/1364/PNG/512/swimmingman_89145.png",
+  шахматы: "https://cdn-icons-png.flaticon.com/512/3410/3410963.png",
+  "силовой экстрим":
+    "https://w7.pngwing.com/pngs/698/556/png-transparent-logo-physical-strength-strength-training-computer-icons-strength-miscellaneous-hand-monochrome-thumbnail.png",
+  футбол: "https://cdn-icons-png.flaticon.com/512/53/53283.png",
+  хоккей: "https://cdn-icons-png.flaticon.com/512/3062/3062042.png",
+  "настольный теннис": "https://cdn-icons-png.flaticon.com/512/933/933900.png",
+};
 
 LogBox.ignoreAllLogs();
 
@@ -137,7 +155,6 @@ function NewsScreen({ navigation }) {
   }
 
   function validateProcess(error) {
-    console.log(filterList);
     if (filterList.length === 0) {
       setData(news_data);
       return;
@@ -169,6 +186,15 @@ function NewsScreen({ navigation }) {
               return (
                 <TouchableOpacity key={index} onPress={() => pressNews(item)}>
                   <View style={styles.newsBox}>
+                    <Image
+                      style={{
+                        width: 40,
+                        height: 40,
+                      }}
+                      source={{
+                        uri: filterIcons[item.tag],
+                      }}
+                    />
                     <Text style={styles.newsText}>{item.title}</Text>
                   </View>
                 </TouchableOpacity>
