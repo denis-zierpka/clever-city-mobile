@@ -29,20 +29,20 @@ function SingleNewsScreen({ route, navigation }) {
   }
   return (
     <SafeAreaView>
-      <TouchableOpacity onPress={() => goBack()}>
-        <View style={styles.topBar}>
-          <Ionicons name={"arrow-back"} size={26} color={"black"} />
-        </View>
-      </TouchableOpacity>
-
-      <ScrollView style={styles.container}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.news}>{item.news}</Text>
-        <Text style={styles.tag}>Тег: {item.tag}</Text>
-      </ScrollView>
-      {/* <View style={styles.singleNews}>
-        
-      </View> */}
+      <View style={{ width: "100%", height: "100%" }}>
+        <ScrollView style={styles.container}>
+          <View>
+            <TouchableOpacity onPress={() => goBack()}>
+              <View style={styles.topBar}>
+                <Ionicons name={"arrow-back"} size={26} color={"black"} />
+              </View>
+            </TouchableOpacity>
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.news}>{item.news}</Text>
+            <Text style={styles.tag}>Тег: {item.tag}</Text>
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -55,18 +55,20 @@ const styles = StyleSheet.create({
     // backgroundColor: "black"
   },
   container: {
-    padding: 30,
+    // padding: 30,
+    // margin: 30,
   },
   title: {
+    margin: 30,
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
   },
   news: {
+    margin: 30,
     fontSize: 16,
-    marginBottom: 40,
   },
   tag: {
+    margin: 30,
     fontSize: 16,
     fontWeight: "bold",
   },
