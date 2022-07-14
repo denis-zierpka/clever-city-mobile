@@ -22,7 +22,7 @@ import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 
-import NewsScreen from "./NewsScreen";
+import NewsScreen from "./NewsScreens/NewsScreen";
 import ScheduleScreen from "./ScheduleScreen";
 import ParticipateScreen from "./ParticipateScreen";
 import ResultsScreen from "./ResultsScreens/ResultsScreen";
