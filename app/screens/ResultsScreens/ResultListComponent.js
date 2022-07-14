@@ -12,16 +12,18 @@ import {
   StatusBar,
 } from "react-native";
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {NavigationContainer} from "@react-navigation/native";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TextInput } from "react-native";
-import { TouchableOpacity } from "react-native";
+import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {TextInput} from "react-native";
+import {TouchableOpacity} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
+import {faTrophy} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 
 // const allContactsFromDatabase = [
 //   {
@@ -116,7 +118,7 @@ function ResultListComponent(props) {
   const [allContactsFromDatabase, setAllContactsFromDatabase] = useState([]);
   const [searchPeopleTerm, setSearchPeopleTerm] = useState();
   const [foundPeopleList, setFoundPeopleList] = useState([]);
-  
+
   if (props.state === "for_you") {
     const getPeople = async () => {
       try {
@@ -223,7 +225,7 @@ function ResultListComponent(props) {
   }
 
   return (
-    <View style={{ backgroundColor: "white", flex: 1 }}>
+    <View style={{flex: 1}}>
       <View style={styles.page}>
         <ScrollView nestedScrollEnabled={true}>
           {props.state === "for_you" ? (
@@ -244,11 +246,11 @@ function ResultListComponent(props) {
                   placeholder="Search..."
                 />
                 {isLoadingPeopleList ? (
-                  <ActivityIndicator style={styles.activityIndicator} />
+                  <ActivityIndicator style={styles.activityIndicator}/>
                 ) : (
                   <ScrollView
                     nestedScrollEnabled={true}
-                    style={{ marginTop: 20, marginLeft: 30 }}
+                    style={{marginTop: 20, marginLeft: 30}}
                   >
                     {foundPeopleList.map((item, index) => {
                       return (
@@ -256,8 +258,8 @@ function ResultListComponent(props) {
                           key={index}
                           onPress={() => pressedFilterOption(item)}
                         >
-                          <View style={{ width: "100%", height: 26 }}>
-                            <Text style={{ fontSize: 15 }}>
+                          <View style={{width: "100%", height: 26}}>
+                            <Text style={{fontSize: 15}}>
                               {item.name} ({item.login})
                             </Text>
                           </View>
@@ -269,11 +271,12 @@ function ResultListComponent(props) {
               </View>
             </View>
           ) : (
-            <View />
+            <View/>
           )}
 
+
           {isLoadingResultsList ? (
-            <ActivityIndicator style={styles.activityIndicator} />
+            <ActivityIndicator style={styles.activityIndicator}/>
           ) : (
             filteredResultsFromDatabase.map((item, index) => {
               return (
@@ -281,15 +284,45 @@ function ResultListComponent(props) {
                   key={index}
                   onPress={() => pressResults(item)}
                 >
-                  <View style={styles.resultsBox}>
-                    <Text style={styles.resultsText}>
-                      {item.login} {item.competition} {item.date} {item.result}
-                    </Text>
+                  <View style={{...styles.resultsBox, ...styles.container, ...styles.shadow}}>
+                    {/*<Text style={styles.resultsText}>*/}
+                    {/*  {item.login} {item.competition} {item.date} {item.result}*/}
+                    {/*</Text>*/}
+                    <View style={{display: 'flex', flexDirection: 'column'}}>
+                      <Text style={{fontSize: 18, fontWeight: '600'}}>{item.competition} &#183; {item.date}</Text>
+                      <Text style={{fontSize: 16, marginTop: 8, marginBottom: 8}}>Поздравляем команды победителей!!! В упорной борьбе
+                        проплыли 50 метров ребята очень быстро!</Text>
+                      <View style={{
+                        display: 'flex', flexDirection: "row", marginTop: 8,
+                        justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center'
+                      }}>
+                        <FontAwesomeIcon icon={faTrophy} size={24} color={'gold'}/>
+                        <Text style={{marginLeft: 8, fontSize: 16}}>Иванов Максим</Text>
+                      </View>
+
+                      <View style={{
+                        display: 'flex', flexDirection: "row", marginTop: 8,
+                        justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center'
+                      }}>
+                        <FontAwesomeIcon icon={faTrophy} size={24} color={'silver'}/>
+                        <Text style={{marginLeft: 8, fontSize: 16}}>Ильин Григорий</Text>
+                      </View>
+
+                      <View style={{
+                        display: 'flex', flexDirection: "row", marginTop: 8,
+                        justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center'
+                      }}>
+                        <FontAwesomeIcon icon={faTrophy} size={24} color={'#cd7f32'}/>
+                        <Text style={{marginLeft: 8, fontSize: 16}}>Крылов Павел</Text>
+                      </View>
+                    </View>
                   </View>
                 </TouchableOpacity>
               );
             })
           )}
+
+
           {filteredResultsFromDatabase.length <= 1 ? (
             <View style={styles.emptyDataView}>
               <Text style={styles.emptyDataText}>
@@ -297,7 +330,7 @@ function ResultListComponent(props) {
               </Text>
             </View>
           ) : (
-            <View />
+            <View/>
           )}
         </ScrollView>
       </View>
@@ -306,9 +339,29 @@ function ResultListComponent(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 8,
+    marginLeft: 12,
+    marginRight: 12,
+    // padding: 10,
+    // paddingRight: 8,
+    borderRadius: 8,
+    backgroundColor: '#ffffff',
+
+  },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+  },
   page: {
     flex: 1,
-    backgroundColor: "white",
+    //backgroundColor: "white",
   },
   titleView: {
     width: "100%",
@@ -350,13 +403,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   resultsBox: {
-    width: "100%",
-    height: 100,
-    marginTop: 20,
+    // width: "100%",
+    marginTop: 8,
     padding: 20,
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 30,
+    //borderColor: "black",
+    // borderWidth: 1,
+    // borderRadius: 30,
   },
   resultsText: {
     padding: 10,
