@@ -23,49 +23,48 @@ import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
 
-
-const allContactsFromDatabase = [
-  {
-    id: 1,
-    name: "Denis",
-    login: "Burenie1",
-  },
-  {
-    id: 2,
-    name: "Boris",
-    login: "Burenie2",
-  },
-  {
-    id: 3,
-    name: "Alex",
-    login: "Burenie3",
-  },
-  {
-    id: 4,
-    name: "Владимир",
-    login: "Burenie4",
-  },
-  {
-    id: 5,
-    name: "Алексей Петрович",
-    login: "Burenie5",
-  },
-  {
-    id: 6,
-    name: "Дмитрий",
-    login: "Burenie6",
-  },
-  {
-    id: 7,
-    name: "Сергей",
-    login: "Burenie7",
-  },
-  {
-    id: 8,
-    name: "Polina",
-    login: "Burenie8",
-  },
-];
+// const allContactsFromDatabase = [
+//   {
+//     id: 1,
+//     name: "Denis",
+//     login: "Burenie1",
+//   },
+//   {
+//     id: 2,
+//     name: "Boris",
+//     login: "Burenie2",
+//   },
+//   {
+//     id: 3,
+//     name: "Alex",
+//     login: "Burenie3",
+//   },
+//   {
+//     id: 4,
+//     name: "Владимир",
+//     login: "Burenie4",
+//   },
+//   {
+//     id: 5,
+//     name: "Алексей Петрович",
+//     login: "Burenie5",
+//   },
+//   {
+//     id: 6,
+//     name: "Дмитрий",
+//     login: "Burenie6",
+//   },
+//   {
+//     id: 7,
+//     name: "Сергей",
+//     login: "Burenie7",
+//   },
+//   {
+//     id: 8,
+//     name: "Polina",
+//     login: "Burenie8",
+//   },
+// ];
 
 const local_filteredResultsFromDatabase = [
   {
@@ -113,15 +112,37 @@ const local_filteredResultsFromDatabase = [
 ];
 
 function ResultListComponent(props) {
+  const [isLoadingPeopleList, setIsLoadingPeopleList] = useState(true);
+  const [allContactsFromDatabase, setAllContactsFromDatabase] = useState([]);
   const [searchPeopleTerm, setSearchPeopleTerm] = useState("");
-  const [foundPeopleList, setFoundPeopleList] = useState(allContactsFromDatabase);
+  const [foundPeopleList, setFoundPeopleList] = useState([]);
+
+  const getPeople = async () => {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/get_users/?left=0&right=1000"
+      );
+      const json = await response.json();
+      console.log(json);
+      setAllContactsFromDatabase(json.series);
+      setFoundPeopleList(allContactsFromDatabase);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoadingPeopleList(false);
+    }
+  };
+
+  useEffect(() => {
+    getPeople();
+  }, []);
 
   // allContactsFromDatabase - all people (get from server)
   useEffect(() => {
     const newContacts = allContactsFromDatabase.filter(
       (contact) =>
-        searchPeopleTerm !== "" &&
-        contact.name.toLowerCase().includes(searchPeopleTerm.toLowerCase())  // change .name
+        searchPeopleTerm === "" ||
+        contact.name.toLowerCase().includes(searchPeopleTerm.toLowerCase()) // change .name
     );
     setFoundPeopleList(newContacts);
   }, [searchPeopleTerm]);
@@ -129,7 +150,8 @@ function ResultListComponent(props) {
   const [selectedContactsList, setSelectedContactsList] = useState([]);
   //----------- start request block --------------
   const [isLoadingResultsList, setIsLoadingResultsList] = useState(true);
-  const [filteredResultsFromDatabase, setFilteredResultsFromDatabase] = useState([]);
+  const [filteredResultsFromDatabase, setFilteredResultsFromDatabase] =
+    useState([]);
 
   const getResults = async () => {
     try {
@@ -143,7 +165,7 @@ function ResultListComponent(props) {
       // setFilteredResultsFromDatabase(json.news); // change
 
       // sending selectedContactsList, getting answer (do not forget to filter!)
-      const new_data = local_filteredResultsFromDatabase
+      const new_data = local_filteredResultsFromDatabase;
       setFilteredResultsFromDatabase(new_data);
     } catch (error) {
       console.error(error);
@@ -164,7 +186,9 @@ function ResultListComponent(props) {
 
   const pressedFilterOption = (item) => {
     if (isInSelectedContactsList(item)) {
-      const newFilterList = selectedContactsList.filter((element) => element !== item);
+      const newFilterList = selectedContactsList.filter(
+        (element) => element !== item
+      );
       setSelectedContactsList(newFilterList);
     } else {
       const newFilterList = [...selectedContactsList, item];
@@ -173,28 +197,25 @@ function ResultListComponent(props) {
   };
 
   function isInSelectedContactsList(item) {
-    if (selectedContactsList.find((elem) => item.login === elem.login)) {  //change 
+    if (selectedContactsList.find((elem) => item.login === elem.login)) {
+      //change
       return true;
     } else {
       return false;
     }
   }
 
-
   function renderButtons() {
     return selectedContactsList.map((item, index) => {
       return (
         <TouchableOpacity key={index} onPress={() => pressedFilterOption(item)}>
-          <View
-            style={styles.filterButtons}
-          >
+          <View style={styles.filterButtons}>
             <Text style={styles.filterButtonsText}>{item.login}</Text>
           </View>
         </TouchableOpacity>
       );
     });
   }
-
 
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
@@ -203,32 +224,43 @@ function ResultListComponent(props) {
           {props.state === "for_you" ? (
             <View>
               <View style={styles.filterButtonHolder}>{renderButtons()}</View>
-              <View style={{ width: "100%", height: 150, borderRadius: 15, borderWidth: 1 }}>
+              <View
+                style={{
+                  width: "100%",
+                  height: 150,
+                  borderRadius: 15,
+                  borderWidth: 1,
+                }}
+              >
                 <TextInput
                   value={searchPeopleTerm}
                   onChangeText={setSearchPeopleTerm}
                   style={styles.searchInput}
                   placeholder="Search..."
                 />
-                <ScrollView
-                  nestedScrollEnabled={true}
-                  style={{ marginTop: 20, marginLeft: 30 }}
-                >
-                  {foundPeopleList.map((item, index) => {
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        onPress={() => pressedFilterOption(item)}
-                      >
-                        <View style={{ width: "100%", height: 26 }}>
-                          <Text style={{ fontSize: 15 }}>
-                            {item.name} ({item.login})
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </ScrollView>
+                {isLoadingPeopleList ? (
+                  <ActivityIndicator style={styles.activityIndicator} />
+                ) : (
+                  <ScrollView
+                    nestedScrollEnabled={true}
+                    style={{ marginTop: 20, marginLeft: 30 }}
+                  >
+                    {foundPeopleList.map((item, index) => {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => pressedFilterOption(item)}
+                        >
+                          <View style={{ width: "100%", height: 26 }}>
+                            <Text style={{ fontSize: 15 }}>
+                              {item.name} ({item.login})
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </ScrollView>
+                )}
               </View>
             </View>
           ) : (
@@ -240,9 +272,14 @@ function ResultListComponent(props) {
           ) : (
             filteredResultsFromDatabase.map((item, index) => {
               return (
-                <TouchableOpacity key={index} onPress={() => pressResults(item)}>
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => pressResults(item)}
+                >
                   <View style={styles.resultsBox}>
-                    <Text style={styles.resultsText}>{item.login} {item.competition} {item.date} {item.result}</Text>
+                    <Text style={styles.resultsText}>
+                      {item.login} {item.competition} {item.date} {item.result}
+                    </Text>
                   </View>
                 </TouchableOpacity>
               );
@@ -323,7 +360,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   activityIndicator: {
-    marginTop: 150,
+    marginTop: 50,
   },
   emptyDataView: {
     justifyContent: "center",
