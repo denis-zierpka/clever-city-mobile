@@ -22,6 +22,7 @@ import { useState, useEffect } from "react";
 
 import NewsScreen from "./NewsScreen";
 import ScheduleScreen from "./ScheduleScreen";
+import ParticipateScreen from "./ParticipateScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -40,6 +41,8 @@ function MainTabs({ navigation }) {
             // iconName = focused ? 'information-circle' : 'information-circle-outline';
           } else if (route.name === "ScheduleScreen") {
             iconName = focused ? "list-circle" : "list-circle-outline";
+          } else if (route.name === 'ParticipateScreen') {
+            iconName = focused ? "list-circle" : "list-circle-outline";
           }
 
           // You can return any component that you like here!
@@ -54,6 +57,7 @@ function MainTabs({ navigation }) {
 
       <BottomTab.Screen name="NewsScreen" component={NewsScreen} options={{ title: "News", headerShown: false }} />
       <BottomTab.Screen name="ScheduleScreen" component={ScheduleScreen} />
+      <BottomTab.Screen name={'ParticipateScreen'} component={ParticipateScreen} options={{title: "Участие", headerShown: false}}/>
 
 
       {/* <BottomTab.Screen name="NewsScreen">
