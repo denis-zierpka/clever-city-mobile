@@ -20,6 +20,7 @@
     "@react-navigation/material-top-tabs": "^6.2.2",
     "@react-navigation/native": "^6.0.11",
     "@react-navigation/native-stack": "^6.7.0",
+    "css-tree": "^2.1.0",
     "expo": "~45.0.0",
     "expo-device": "^4.2.0",
     "expo-notifications": "^0.15.4",

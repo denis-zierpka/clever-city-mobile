@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
   page: {
     marginTop: StatusBar.currentHeight + 30,
     flex: 1,
-    padding: 15,
     backgroundColor: "white",
   },
 });

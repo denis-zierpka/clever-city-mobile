@@ -308,7 +308,6 @@ function ResultListComponent(props) {
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    padding: 15,
     backgroundColor: "white",
   },
   titleView: {
@@ -331,7 +330,6 @@ const styles = StyleSheet.create({
     padding: 2,
     borderColor: "black",
     margin: 5,
-    borderRadius: 1,
     borderWidth: 1,
     alignContent: "center",
     justifyContent: "center",

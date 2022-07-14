@@ -56,15 +56,15 @@ function MainTabs({ navigation }) {
       <BottomTab.Screen
         name="NewsScreen"
         component={NewsScreen}
-        options={{ title: "News", headerShown: false }}
+        options={{ title: "News", headerShown: true }}
       />
       <BottomTab.Screen
         name="ResultsScreen"
         component={ResultsScreen}
-        options={{ title: "Результаты", headerShown: false }}
+        options={{ title: "Результаты", headerShown: true }}
       />
       <BottomTab.Screen name="ScheduleScreen" component={ScheduleScreen} />
-      <BottomTab.Screen name={'ParticipateScreen'} component={ParticipateScreen} options={{title: "Участие", headerShown: false}}/>
+      <BottomTab.Screen name={'ParticipateScreen'} component={ParticipateScreen} options={{title: "Участие", headerShown: true}}/>
 
 
       {/* <BottomTab.Screen name="NewsScreen">

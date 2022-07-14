@@ -67,7 +67,7 @@ import { useState, useEffect } from "react";
 // ];
 
 const availableFilters = [
-  "technology",
+  "techno",
   "nature",
   "space",
   "adventure",
@@ -162,11 +162,23 @@ function NewsScreen({ navigation }) {
         <TouchableOpacity key={item} onPress={() => pressedFilterOption(item)}>
           <View
             style={{
-              ...styles.filterButtons,
-              backgroundColor: checkIfExists(item) ? "#0384fc" : "#75aeeb",
+              // ...styles.filterButtons,
+              borderRadius: 10,
+              padding: 4,
+              paddingLeft: 8,
+              paddingRight: 8,
+              marginLeft: 4,
+              marginBottom: 4,
+              color: '#ffffff',
+              borderStyle: 'solid',
+              borderWidth: 2,
+              borderColor: "#109696",
+              backgroundColor: checkIfExists(item) ? "#109696" : 'transparent',
+              alignContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <Text style={styles.filterButtonsText}>{item}</Text>
+            <Text style={{...styles.filterButtonsText, color: checkIfExists(item) ? 'white' : "#109696", textAlign: 'center'}}>{item}</Text>
           </View>
         </TouchableOpacity>
       );
@@ -177,9 +189,9 @@ function NewsScreen({ navigation }) {
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <View style={styles.page}>
         <ScrollView>
-          <View style={styles.titleView}>
-            <Text style={styles.titleText}>Новости</Text>
-          </View>
+          {/*<View style={styles.titleView}>*/}
+          {/*  <Text style={styles.titleText}>Новости</Text>*/}
+          {/*</View>*/}
           <View style={styles.filterButtonHolder}>{renderButtons()}</View>
           {isLoading ? (
             <ActivityIndicator style={styles.activityIndicator} />
@@ -211,9 +223,8 @@ function NewsScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   page: {
-    marginTop: 50,
+    // marginTop: 50,
     flex: 1,
-    padding: 15,
     backgroundColor: "white",
   },
   titleView: {
@@ -244,7 +255,7 @@ const styles = StyleSheet.create({
     padding: 2,
     borderColor: "black",
     margin: 5,
-    borderRadius: 1,
+    //borderRadius: 1,
     borderWidth: 1,
     alignContent: "center",
     justifyContent: "center",
@@ -254,7 +265,7 @@ const styles = StyleSheet.create({
   },
   filterButtonsText: {
     color: "black",
-    fontSize: 20,
+    fontSize: 16,
   },
   filterButtonHolder: {
     marginTop: 30,
