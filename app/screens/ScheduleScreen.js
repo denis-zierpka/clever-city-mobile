@@ -19,7 +19,7 @@ import {
   faChevronRight,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { filterIcons, schedule_data } from "./TestData";
+import {filterIcons, filterIconsAdv, schedule_data} from "./TestData";
 import { useState, useEffect } from "react";
 import { clickProps } from "react-native-web/dist/cjs/modules/forwardedProps";
 
@@ -76,9 +76,10 @@ function EventCard({ navigation, item }) {
               width: 60,
               height: 60,
             }}
-            source={{
-              uri: filterIcons[item.title.toLowerCase()],
-            }}
+            source={filterIconsAdv[item.title.toLowerCase()]}
+            // source={{
+            //   uri: filterIconsAdv[item.title.toLowerCase()],
+            // }}
           />
           <View
             style={{

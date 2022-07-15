@@ -27,7 +27,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {news_data, filterIcons} from "../TestData";
+import {news_data, filterIcons, filterIconsAdv} from "../TestData";
 import {useState, useEffect} from "react";
 import adv from '../../assets/adv.png'
 
@@ -205,13 +205,15 @@ function NewsScreen({navigation}) {
                           width: 50,
                           height: 50,
                         }}
-                        source={{
-                          uri: filterIcons[item.tag],
-                        }}
+                        // source={{
+                        //   uri: filterIcons[item.tag],
+                        // }}
+
+                        source={filterIconsAdv[item.tag]}
                       />
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 16}}>
-                      <Text style={{...styles.newsText, color: 'grey'}}>{'#плавание'}</Text>
+                      <Text style={{...styles.newsText, color: 'grey'}}>{'#' + item.tag}</Text>
                       <Text style={{...styles.newsText, color: 'grey'}}>{'05.08 12:22'}</Text>
                     </View>
                   </View>

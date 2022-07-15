@@ -15,7 +15,7 @@ import {
   faLocationDot,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { filterIcons, schedule_data } from "./TestData";
+import {filterIcons, filterIconsAdv, schedule_data} from "./TestData";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { useState, useEffect } from "react";
 import { Button } from "react-native-web";
@@ -103,9 +103,10 @@ function EventCard({ navigation, item }) {
               width: 60,
               height: 60,
             }}
-            source={{
-              uri: filterIcons[item.title.toLowerCase()],
-            }}
+            // source={{
+            //   uri: filterIcons[item.title.toLowerCase()],
+            // }}
+            source={filterIconsAdv[item.title.toLowerCase()]}
           />
           <View
             style={{
