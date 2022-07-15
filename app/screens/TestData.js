@@ -1,3 +1,12 @@
+import soccer from '../assets/soccer.png'
+import swimming from '../assets/swimming.png'
+import volley from '../assets/volley.png'
+import chess from '../assets/chess.png'
+import badminton from '../assets/badminton.png'
+import pingpong from '../assets/pingpong.png'
+import hockey from  '../assets/hockey.png';
+import basketball from '../assets/basketball.png'
+
 export const news_data = [
   {
     id: 1,
@@ -121,6 +130,18 @@ export const news_data = [
     photo: "https://sarinform.ru/assets/images/resources/218128/bigwebp/image-11-07-22-09-53.webp",
   }
 ];
+
+export const filterIconsAdv = {
+  // бадминтон: badminton,
+  плавание: swimming,
+  шахматы: chess,
+  волейбол: volley,
+  "настольный теннис": pingpong,
+  хоккей: hockey,
+  футбол: soccer,
+  бадминтон: badminton,
+  баскетбол: basketball,
+};
 
 export const filterIcons = {
   бадминтон: "https://cdn-icons-png.flaticon.com/512/2829/2829107.png",
