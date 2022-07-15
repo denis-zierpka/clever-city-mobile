@@ -144,17 +144,21 @@ export default function App() {
         <Stack.Screen
           name="SingleNewsScreen"
           component={SingleNewsScreen}
-          options={{ headerShown: false, title: 'Новости' }}
+          options={{ headerShown: true, title: 'Новости', headerTintColor: 'white',
+            headerStyle: { backgroundColor: "#109696" },
+            headerTitleStyle: { color: "white" }, }}
         />
         <Stack.Screen
           name="EventRegistrationScreen"
           component={EventRegistrationScreen}
-          options={{ headerShown: true, title: "Регистрация на соревнование" }}
+          options={{ headerShown: true, title: "Регистрация на соревнование", headerTintColor: 'white',headerStyle: { backgroundColor: "#109696" },
+            headerTitleStyle: { color: "white" },}}
         />
         <Stack.Screen
           name="SingleRegistrationScreen"
           component={SingleRegistrationScreen}
-          options={{ headerShown: true, title: "Единоразовая регистрация" }}
+          options={{ headerShown: true, title: "Единоразовая регистрация", headerTintColor: 'white',headerStyle: { backgroundColor: "#109696" },
+            headerTitleStyle: { color: "white" }, }}
         />
       </Stack.Navigator>
     </NavigationContainer>

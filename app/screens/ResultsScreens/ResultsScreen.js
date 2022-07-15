@@ -32,7 +32,9 @@ function ResultsScreen({ navigation }) {
   return (
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <View style={styles.page}>
-        <TopTab.Navigator>
+        <TopTab.Navigator tabBarOptions={{indicatorStyle :{
+        backgroundColor:'#109696'
+      }}}>
           <TopTab.Screen
             name="ResultsAllScreen"
             component={ResultsAllScreen}

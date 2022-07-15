@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   FlatList,
   ScrollView,
-  SafeAreaView,
+  SafeAreaView, Image,
 } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -32,11 +32,15 @@ function SingleNewsScreen({ route, navigation }) {
       <View style={{ width: "100%", height: "100%" }}>
         <ScrollView style={styles.container}>
           <View>
-            <TouchableOpacity onPress={() => goBack()}>
-              <View style={styles.topBar}>
-                <Ionicons name={"arrow-back"} size={26} color={"black"} />
-              </View>
-            </TouchableOpacity>
+            {/*<TouchableOpacity onPress={() => goBack()}>*/}
+            {/*  <View style={styles.topBar}>*/}
+            {/*    /!*<Ionicons name={"arrow-back"} size={26} color={"black"} />*!/*/}
+            {/*  </View>*/}
+            {/*</TouchableOpacity>*/}
+            <Image source={{uri: 'https://www.vzsar.ru/i/news/xxl/2020/06/202363_1591260720.jpg'}} style={{
+              width: 400,
+              height: 300,
+            }}/>
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.news}>{item.news}</Text>
             <Text style={styles.tag}>Тег: {item.tag}</Text>
@@ -51,7 +55,7 @@ const styles = StyleSheet.create({
   topBar: {
     height: 30,
     width: 30,
-    margin: 30,
+    margin: 8,
     // backgroundColor: "black"
   },
   container: {
@@ -59,16 +63,16 @@ const styles = StyleSheet.create({
     // margin: 30,
   },
   title: {
-    margin: 30,
+    margin: 8,
     fontSize: 24,
     fontWeight: "bold",
   },
   news: {
-    margin: 30,
+    margin: 8,
     fontSize: 16,
   },
   tag: {
-    margin: 30,
+    margin: 8,
     fontSize: 16,
     fontWeight: "bold",
   },

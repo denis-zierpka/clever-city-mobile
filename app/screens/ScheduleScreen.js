@@ -193,7 +193,9 @@ function ScheduleScreen({ navigation }) {
     <View style={{ backgroundColor: "white", flex: 1 }}>
       <View style={styles.page}>
         <View style={{ marginTop: StatusBar.currentHeight, flex: 1 }}>
-          <TopTab.Navigator>
+          <TopTab.Navigator tabBarOptions={{indicatorStyle :{
+              backgroundColor:'#109696'
+            }}}>
             <TopTab.Screen
               name="ResultsForYouScreen1"
               component={() => (
