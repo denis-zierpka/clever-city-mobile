@@ -101,7 +101,7 @@ export default function App() {
       console.warn('An error occurred', err);
     });
     Linking.addEventListener('url', (w) => {
-      Alert.alert("Тестовая команда", 'Заявка от участника: Альфред Нуртдинов')
+      Alert.alert("Волейбол: Тестовая команда", 'Заявка от участника: Альфред Нуртдинов')
       store.actions.increase();
     });
     myFunction();

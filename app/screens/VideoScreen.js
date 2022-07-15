@@ -111,8 +111,8 @@ function VideoScreen(props) {
                   key={index}
                   style={{
                     position: "absolute",
-                    left: 20,
-                    right: 20,
+                    left: 10,
+                    right: 10,
                     height: undefined,
                     aspectRatio: 1280 / 720,
                     alignItems: "center",
