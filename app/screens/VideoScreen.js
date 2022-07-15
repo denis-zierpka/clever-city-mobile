@@ -31,7 +31,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Video, AVPlaybackStatus } from "expo-av";
 import { WebView } from "react-native-webview";
 import { useState, useEffect } from "react";
-import YouTube from "react-native-youtube";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCirclePlay, faPlay } from "@fortawesome/free-solid-svg-icons";
 
@@ -91,7 +90,7 @@ function VideoScreen(props) {
     <ScrollView>
       {list_of_videos.map((item, index) => {
         return (
-          <TouchableOpacity onPress={() => getVideo(item)}>
+          <TouchableOpacity key={index} onPress={() => getVideo(item)}>
             <View style={{ marginTop: 20, marginBottom: 80 }}>
               <View
                 style={{

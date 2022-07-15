@@ -179,8 +179,7 @@ function ScheduleScreen({ navigation }) {
       const json = await response.json();
       setScheduleListFromDatabase(json.schedule);
     } catch (error) {
-      validateProcess(error);
-      // console.error(error);
+      console.error(error);
     } finally {
       setIsLoadingScheduleList(false);
     }

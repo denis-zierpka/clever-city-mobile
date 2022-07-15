@@ -10,6 +10,7 @@ import {
   View
 } from "react-native";
 import {useEffect, useState} from "react";
+import { getCredentials, setCredentials } from "../api";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,13 +29,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const navigate_to_ers_screen = (navigation) => {
+const navigate_to_ers_screen = (navigation, item, data) => {
   navigation.replace("EventRegistrationScreen", {
-
+    item: item,
+    data: data,
   });
 };
 
-function SingleRegistrationScreen({navigation}) {
+function SingleRegistrationScreen({ route, navigation}) {
+  const [isButtonTaped, setIsButtonTaped] = useState(false)
+
+  const { item } = route.params;
+  console.log("Hello from SingleRegistrationScreen")
+  console.log(item)
   const {scrollHandler} = useInputScrollHandler({extraScrollHeight: 64});
 
   const [userInfo, setUserInfo] = useState({
@@ -47,9 +54,26 @@ function SingleRegistrationScreen({navigation}) {
     description: 'Hello from user'
   })
 
+  const [creds, setCreds] = useState();
+
+
+  const myFunctionToSetCredentials = async () => {
+    await setCredentials(userInfo.login, userInfo.password);
+  };
+
+
+  useEffect(() => {
+    if (isButtonTaped) {
+      myFunctionToSetCredentials();
+      setIsButtonTaped(false);
+      navigate_to_ers_screen(navigation, item, creds);
+    }
+  }, [isButtonTaped])
+
   const handleSignUp = () => {
     console.log(userInfo);
-    navigate_to_ers_screen(navigation);
+    setIsButtonTaped(true);
+    // navigate_to_ers_screen(navigation, item);
   }
 
   // useEffect( () => {

@@ -289,7 +289,8 @@ const LotOfTeams = () => {
 }
 
 
-function EventRegistrationScreen({navigator}) {
+function EventRegistrationScreen({ route, navigation }) {
+  const { item, creds } = route.params;
   const {scrollHandler} = useInputScrollHandler({extraScrollHeight: 64});
 
 

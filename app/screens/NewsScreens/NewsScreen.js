@@ -80,8 +80,10 @@ function NewsScreen({navigation}) {
       validateProcess(error);
       console.error(error);
     } finally {
-      if (filterList.length !== 0) setTimeout(() => setLoading(false), 500);
-      else setLoading(false);
+      // if (filterList.length !== 0) 
+      // setTimeout(() => setLoading(false), 500);
+      // else 
+      setLoading(false);
     }
   };
 

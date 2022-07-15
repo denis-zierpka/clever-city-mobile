@@ -62,7 +62,7 @@ export default function App() {
         <Stack.Screen
           name="SingleNewsScreen"
           component={SingleNewsScreen}
-          options={{ headerShown: true, title: 'Новости' }}
+          options={{ headerShown: false, title: 'Новости' }}
         />
         <Stack.Screen
           name="EventRegistrationScreen"
