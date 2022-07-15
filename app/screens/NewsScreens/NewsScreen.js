@@ -29,6 +29,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {news_data} from "../TestData";
 import {useState, useEffect} from "react";
+import adv from '../../assets/adv.png'
 
 const availableFilters = [
   "бадминтон",
@@ -175,6 +176,11 @@ function NewsScreen({navigation}) {
     <View style={{flex: 1}}>
       <View style={styles.page}>
         <ScrollView>
+          <Image
+            source={adv}
+            resizeMode={'cover'}
+            style={{ width: '100%', height: 150}}
+          />
           {/*<View style={styles.titleView}>*/}
           {/*  <Text style={styles.titleText}>Новости</Text>*/}
           {/*</View>*/}
@@ -309,7 +315,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   filterButtonHolder: {
-    margin: 12,
+    // margin: 12,
     // borderWidth: 1,
     // width: "100%",
     // height: 100,
