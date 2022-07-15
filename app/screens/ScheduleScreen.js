@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
 
 function EventCard({ navigation, item }) {
   return (
-    <TouchableOpacity onPress={() => navigate_to_ers_screen(navigation)}>
+    // <TouchableOpacity onPress={() => navigate_to_ers_screen(navigation)}>
+    <TouchableOpacity onPress={() => console.log("Schedule touched EventCard")}>
       <View>
         <View
           style={{
