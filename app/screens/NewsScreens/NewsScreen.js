@@ -27,7 +27,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {news_data} from "../TestData";
+import {news_data, filterIcons} from "../TestData";
 import {useState, useEffect} from "react";
 import adv from '../../assets/adv.png'
 
@@ -43,20 +43,7 @@ const availableFilters = [
   "настольный теннис",
 ];
 
-const filterIcons = {
-  бадминтон: "https://cdn-icons-png.flaticon.com/512/2829/2829107.png",
-  баскетбол: "https://cdn-icons-png.flaticon.com/512/1584/1584021.png",
-  волейбол:
-    "https://img2.freepng.ru/20181113/wjf/kisspng-beach-volleyball-vector-graphics-volleyball-net-sp-volleyball-beach-ball-play-svg-png-icon-free-downl-5beb393eef9717.6236570815421422709814.jpg",
-  плавание:
-    "https://cdn.icon-icons.com/icons2/1364/PNG/512/swimmingman_89145.png",
-  шахматы: "https://cdn-icons-png.flaticon.com/512/3410/3410963.png",
-  "силовой экстрим":
-    "https://w7.pngwing.com/pngs/698/556/png-transparent-logo-physical-strength-strength-training-computer-icons-strength-miscellaneous-hand-monochrome-thumbnail.png",
-  футбол: "https://cdn-icons-png.flaticon.com/512/53/53283.png",
-  хоккей: "https://cdn-icons-png.flaticon.com/512/3062/3062042.png",
-  "настольный теннис": "https://cdn-icons-png.flaticon.com/512/933/933900.png",
-};
+
 
 LogBox.ignoreAllLogs();
 
