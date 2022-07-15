@@ -104,7 +104,7 @@ export const filterIcons = {
   бадминтон: "https://cdn-icons-png.flaticon.com/512/2829/2829107.png",
   баскетбол: "https://cdn-icons-png.flaticon.com/512/1584/1584021.png",
   волейбол:
-    "https://img2.freepng.ru/20181113/wjf/kisspng-beach-volleyball-vector-graphics-volleyball-net-sp-volleyball-beach-ball-play-svg-png-icon-free-downl-5beb393eef9717.6236570815421422709814.jpg",
+    "http://cdn.onlinewebfonts.com/svg/img_530765.png",
   плавание:
     "https://cdn.icon-icons.com/icons2/1364/PNG/512/swimmingman_89145.png",
   шахматы: "https://cdn-icons-png.flaticon.com/512/3410/3410963.png",

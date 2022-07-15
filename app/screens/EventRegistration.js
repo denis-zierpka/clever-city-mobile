@@ -96,7 +96,6 @@ const TeamSpecified = () => {
   const [teamName, setNewTeamName] = React.useState(store.getState().team);
 
 
-
   return (
     <>
 
@@ -135,34 +134,43 @@ const TeamSpecified = () => {
         ...styles.container, ...styles.shadow, marginTop: 8, padding: 16, display: 'flex',
         flexDirection: 'column', justifyContent: 'space-between'
       }}>
-      <Text style={{
-        fontSize: 20,
-        fontWeight: "600",
-        marginBottom: 16,
-      }}>Ссылка-приглашение</Text>
-      <View style={{
-        display: 'flex',
-        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'
-      }}>
+        <Text style={{
+          fontSize: 20,
+          fontWeight: "600",
+          marginBottom: 16,
+        }}>Ссылка-приглашение</Text>
+        <View style={{
+          display: 'flex',
+          flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'
+        }}>
 
-        <Text
-          style={{
-            padding: 16,
-            fontSize: 16,
-            borderRadius: 4,
-            borderWidth: 1,
-            borderColor: 'lightgrey',
-            width: '100%',
-          }}
-          onChangeText={setNewParticipant}
-          value={newParticipant}
-          placeholder="Пригласить участников"
-        >{'exp://192.168.1.63:19000/?23244'}
-        </Text>
-        <View style={{marginLeft: -40, width: 40, height: 32, alignItems: 'center', alignContent: 'center', justifyContent: 'center'}}>
-          <FontAwesomeIcon icon={faCopy} size={24} color={'#737373'}/>
+          <Text
+            style={{
+              padding: 16,
+              fontSize: 16,
+              borderRadius: 4,
+              borderWidth: 1,
+              borderColor: 'lightgrey',
+              width: '100%',
+            }}
+            onChangeText={setNewParticipant}
+            value={newParticipant}
+            placeholder="Пригласить участников"
+          >{'exp://192.168.1.63:19000/?23244'}
+          </Text>
+          <TouchableOpacity>
+            <View style={{
+              marginLeft: -40,
+              width: 40,
+              height: 32,
+              alignItems: 'center',
+              alignContent: 'center',
+              justifyContent: 'center'
+            }}>
+              <FontAwesomeIcon icon={faCopy} size={24} color={'#737373'}/>
+            </View>
+          </TouchableOpacity>
         </View>
-      </View>
       </View>
 
 
@@ -295,8 +303,8 @@ const LotOfTeams = () => {
 }
 
 
-function EventRegistrationScreen({ route, navigation }) {
-  const { item, creds } = route.params;
+function EventRegistrationScreen({route, navigation}) {
+  const {item, creds} = route.params;
   const {scrollHandler} = useInputScrollHandler({extraScrollHeight: 64});
   const [tpClicked, setTpClicked] = useState(false);
   return (
