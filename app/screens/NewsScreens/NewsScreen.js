@@ -66,7 +66,6 @@ function NewsScreen({navigation}) {
       setData(json.news); // change
     } catch (error) {
       validateProcess(error);
-      console.error(error);
     } finally {
       // if (filterList.length !== 0) 
       // setTimeout(() => setLoading(false), 500);
@@ -211,8 +210,8 @@ function NewsScreen({navigation}) {
                       />
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 16}}>
-                      <Text style={{...styles.newsText, color: 'grey'}}>{'#плавание'}</Text>
-                      <Text style={{...styles.newsText, color: 'grey'}}>{'05.08 12:22'}</Text>
+                      <Text style={{...styles.newsText, color: 'grey'}}>#{item.tag}</Text>
+                      <Text style={{...styles.newsText, color: 'grey'}}>{item.date} {item.time}</Text>
                     </View>
                   </View>
 

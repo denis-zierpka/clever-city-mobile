@@ -37,7 +37,7 @@ function SingleNewsScreen({ route, navigation }) {
             {/*    /!*<Ionicons name={"arrow-back"} size={26} color={"black"} />*!/*/}
             {/*  </View>*/}
             {/*</TouchableOpacity>*/}
-            <Image source={{uri: 'https://www.vzsar.ru/i/news/xxl/2020/06/202363_1591260720.jpg'}} style={{
+            <Image source={{uri: item.photo}} style={{
               width: 400,
               height: 300,
             }}/>
