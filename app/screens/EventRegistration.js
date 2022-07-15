@@ -305,14 +305,15 @@ function EventRegistrationScreen({ route, navigation }) {
       <ScrollView {...scrollHandler} style={{paddingLeft: 8, paddingRight: 8}}>
         <View style={{...styles.container, paddingLeft: 16, paddingRight: 16, backgroundColor: 'white'}}>
           <Text style={{fontWeight: "bold", fontSize: 24, color: '#109696', paddingTop: 16, paddingBottom: 16}}>
-            Плавание
+            {item.title}
           </Text>
           <Text style={{paddingBottom: 16, color: 'black', fontSize: 16}}>
-            За обеспечение успешной подготовки спортсменов, добившихся высоких спортивных
+            {item.body}
+            {/* За обеспечение успешной подготовки спортсменов, добившихся высоких спортивных
             достижений на Играх XXXII Олимпиады и XVI Паралимпийских летних играх 2020 года в городе Токио
             (Япония), награждены Андрей Шишин,
             Сергей Загацкий, Наталия Корабельникова, Дмитрий Лазарев,
-            Наталья Рощина, Виталий Гур1о, Сергей Валентинович Жилкин и другие.
+            Наталья Рощина, Виталий Гур1о, Сергей Валентинович Жилкин и другие. */}
           </Text>
         </View>
         <Text style={{margin: 16, fontWeight: "bold", fontSize: 24, color: '#000000'}}>
