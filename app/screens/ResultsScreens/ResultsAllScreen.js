@@ -4,7 +4,7 @@ import ResultListComponent from "./ResultListComponent";
 
 function ResultsAllScreen({ navigation }) {
   return (
-    <ResultListComponent state="all"/>
+    <ResultListComponent navigation={navigation} state="all"/>
   );
 }
 

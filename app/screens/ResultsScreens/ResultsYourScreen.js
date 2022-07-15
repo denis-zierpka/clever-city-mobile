@@ -4,7 +4,7 @@ import ResultListComponent from "./ResultListComponent";
 
 function ResultsYourScreen({ navigation }) {
   return (
-    <ResultListComponent state="your"/>
+    <ResultListComponent navigation={navigation} state="your"/>
   );
 }
 

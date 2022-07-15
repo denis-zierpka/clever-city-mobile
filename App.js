@@ -29,6 +29,7 @@ import {createHooks, Provider} from "react-global-hook";
 import {store} from "./app/screens/TestGlobals";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
+import SingleResultsScreen from "./app/screens/SingleResultsScreen";
 
 const Stack = createNativeStackNavigator();
 const useGlobal = createHooks(store);
@@ -158,6 +159,12 @@ export default function App() {
           name="SingleRegistrationScreen"
           component={SingleRegistrationScreen}
           options={{ headerShown: true, title: "Единоразовая регистрация", headerTintColor: 'white',headerStyle: { backgroundColor: "#109696" },
+            headerTitleStyle: { color: "white" }, }}
+        />
+        <Stack.Screen
+          name="SingleResultsScreen"
+          component={SingleResultsScreen}
+          options={{ headerShown: true, title: "Просмотр результатов", headerTintColor: 'white',headerStyle: { backgroundColor: "#109696" },
             headerTitleStyle: { color: "white" }, }}
         />
       </Stack.Navigator>

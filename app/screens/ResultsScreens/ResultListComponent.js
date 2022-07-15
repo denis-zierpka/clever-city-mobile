@@ -12,7 +12,7 @@ import {
   StatusBar,
 } from "react-native";
 
-import {NavigationContainer} from "@react-navigation/native";
+import {NavigationContainer, validatePathConfig} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -21,11 +21,12 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {TextInput} from "react-native";
 import {TouchableOpacity} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {useState, useEffect} from "react";
 import {faTrophy} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
+import { contacts_data, result_data } from "../TestData";
+import {useState, useEffect} from "react";
 
-// const allContactsFromDatabase = [
+// const contacts_data = [
 //   {
 //     id: 1,
 //     name: "Denis",
@@ -51,22 +52,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 //     name: "Алексей Петрович",
 //     login: "Burenie5",
 //   },
-//   {
-//     id: 6,
-//     name: "Дмитрий",
-//     login: "Burenie6",
-//   },
-//   {
-//     id: 7,
-//     name: "Сергей",
-//     login: "Burenie7",
-//   },
-//   {
-//     id: 8,
-//     name: "Polina",
-//     login: "Burenie8",
-//   },
-// ];
+
 
 const local_filteredResultsFromDatabase = [
   {
@@ -113,26 +99,23 @@ const local_filteredResultsFromDatabase = [
   },
 ];
 
-function ResultListComponent(props) {
+function ResultListComponent({navigation, state}) {
   const [isLoadingPeopleList, setIsLoadingPeopleList] = useState(true);
-  const [allContactsFromDatabase, setAllContactsFromDatabase] = useState([]);
-  const [searchPeopleTerm, setSearchPeopleTerm] = useState();
+  const [searchPeopleTerm, setSearchPeopleTerm] = useState("");
   const [foundPeopleList, setFoundPeopleList] = useState([]);
 
-  if (props.state === "for_you") {
+  if (state === "for_you") {
     const getPeople = async () => {
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/get_users/?left=0&right=1000"
+          "http://127.0.0.1:8000/fetch_users/?left=0&right=1000"
         );
         const json = await response.json();
-        console.log(json);
-        setAllContactsFromDatabase(json.series);
-        setFoundPeopleList(allContactsFromDatabase);
+        setFoundPeopleList(contacts_data);
         setSearchPeopleTerm("");
         console.log("Done setting");
       } catch (error) {
-        console.error(error);
+        validateProcessPeople(error);
       } finally {
         setIsLoadingPeopleList(false);
       }
@@ -143,10 +126,14 @@ function ResultListComponent(props) {
     }, []);
   }
 
-  // allContactsFromDatabase - all people (get from server)
+  function validateProcessPeople(error) {
+    setFoundPeopleList(contacts_data);
+    setSearchPeopleTerm("");
+  }
+
   useEffect(() => {
     console.log("Try to update after searchPeopleTerm changes");
-    const newContacts = allContactsFromDatabase.filter(
+    const newContacts = contacts_data.filter(
       (contact) =>
         searchPeopleTerm === "" ||
         contact.name.toLowerCase().includes(searchPeopleTerm.toLowerCase()) // change .name
@@ -162,22 +149,17 @@ function ResultListComponent(props) {
 
   const getResults = async () => {
     try {
-      // var filter_str = "$";
-      // for (let i = 0; i < selectedContactsList.length; i++) {
-      //   filter_str += selectedContactsList[i];
-      //   filter_str += "$";
-      // }
-      // const response = await fetch("http://127.0.0.1:5000/news/" + filter_str); // change
-      // const json = await response.json(); // change to .json()
-      // setFilteredResultsFromDatabase(json.news); // change
-
-      // sending selectedContactsList, getting answer (do not forget to filter!)
-      const new_data = local_filteredResultsFromDatabase;
-      setFilteredResultsFromDatabase(new_data);
+      var filter_str = "$";
+      for (let i = 0; i < selectedContactsList.length; i++) {
+        filter_str += selectedContactsList[i];
+        filter_str += "$";
+      }
+      const response = await fetch("http://127.0.0.1:8000/results/" + filter_str); 
+      const json = await response.json();
+      setFilteredResultsFromDatabase(json.news);
     } catch (error) {
-      console.error(error);
+      validateProcess(error);
     } finally {
-      // setTimeout(() => setIsLoadingResultsList(false), 500);
       setIsLoadingResultsList(false);
     }
   };
@@ -224,11 +206,23 @@ function ResultListComponent(props) {
     });
   }
 
+  function validateProcess(error) {
+    setFilteredResultsFromDatabase(result_data);
+  }
+
+  function pressResults(item) {
+    navigation.navigate("SingleResultsScreen", {
+      item: item,
+    })
+  }
+
+  
   return (
     <View style={{flex: 1}}>
       <View style={styles.page}>
         <ScrollView nestedScrollEnabled={true}>
-          {props.state === "for_you" ? (
+          
+          {state === "for_you" ? (
             <View>
               <View style={styles.filterButtonHolder}>{renderButtons()}</View>
               <View
@@ -260,7 +254,7 @@ function ResultListComponent(props) {
                         >
                           <View style={{width: "100%", height: 26}}>
                             <Text style={{fontSize: 15}}>
-                              {item.name} ({item.login})
+                              {item.name}
                             </Text>
                           </View>
                         </TouchableOpacity>
@@ -279,6 +273,9 @@ function ResultListComponent(props) {
             <ActivityIndicator style={styles.activityIndicator}/>
           ) : (
             filteredResultsFromDatabase.map((item, index) => {
+              // console.log("Print filteredResultsFromDatabase")
+              // console.log(filteredResultsFromDatabase);
+              // return (<View></View>)
               return (
                 <TouchableOpacity
                   key={index}
@@ -289,15 +286,14 @@ function ResultListComponent(props) {
                     {/*  {item.login} {item.competition} {item.date} {item.result}*/}
                     {/*</Text>*/}
                     <View style={{display: 'flex', flexDirection: 'column'}}>
-                      <Text style={{fontSize: 18, fontWeight: '600'}}>{item.competition} &#183; {item.date}</Text>
-                      <Text style={{fontSize: 16, marginTop: 8, marginBottom: 8}}>Поздравляем команды победителей!!! В упорной борьбе
-                        проплыли 50 метров ребята очень быстро!</Text>
+                      <Text style={{fontSize: 18, fontWeight: '600'}}>{item.title} &#183; {item.date}</Text>
+                      <Text style={{fontSize: 16, marginTop: 8, marginBottom: 8}}>{item.body}</Text>
                       <View style={{
                         display: 'flex', flexDirection: "row", marginTop: 8,
                         justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center'
                       }}>
                         <FontAwesomeIcon icon={faTrophy} size={24} color={'gold'}/>
-                        <Text style={{marginLeft: 8, fontSize: 16}}>Иванов Максим</Text>
+                        <Text style={{marginLeft: 8, fontSize: 16}}>{item.results[0].name}</Text>
                       </View>
 
                       <View style={{
@@ -305,7 +301,7 @@ function ResultListComponent(props) {
                         justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center'
                       }}>
                         <FontAwesomeIcon icon={faTrophy} size={24} color={'silver'}/>
-                        <Text style={{marginLeft: 8, fontSize: 16}}>Ильин Григорий</Text>
+                        <Text style={{marginLeft: 8, fontSize: 16}}>{item.results[1].name}</Text>
                       </View>
 
                       <View style={{
@@ -313,7 +309,7 @@ function ResultListComponent(props) {
                         justifyContent: 'flex-start', alignContent: 'center', alignItems: 'center'
                       }}>
                         <FontAwesomeIcon icon={faTrophy} size={24} color={'#cd7f32'}/>
-                        <Text style={{marginLeft: 8, fontSize: 16}}>Крылов Павел</Text>
+                        <Text style={{marginLeft: 8, fontSize: 16}}>{item.results[2].name}</Text>
                       </View>
                     </View>
                   </View>
