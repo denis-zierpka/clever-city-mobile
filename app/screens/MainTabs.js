@@ -87,7 +87,7 @@ function MainTabs({ navigation }) {
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={"#109696"} />;
         },
-        tabBarActiveTintColor: "tomato",
+        tabBarActiveTintColor: "#109696",
         tabBarInactiveTintColor: "gray",
       })}
     >
