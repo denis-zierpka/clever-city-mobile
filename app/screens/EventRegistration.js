@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Button,
   FlatList,
@@ -15,13 +15,14 @@ import keyboard from "react-native-web/dist/exports/Keyboard";
 import {Keyboard} from 'react-native';
 import {SearchBar} from "react-native-screens";
 import SearchableDropDown from "react-native-searchable-dropdown";
-import {faXmark, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faXmark, faMagnifyingGlass, faCopy} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {Header} from "react-native/Libraries/NewAppScreen";
 import {useHeaderHeight} from "react-native-screens/native-stack";
 import useInputScrollHandler from "react-native-use-input-scroll-handler";
 import {LogBox} from "react-native";
+import {actions, participantList, store, useStore} from "./TestGlobals";
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
@@ -42,15 +43,20 @@ const styles = StyleSheet.create({
   }
 });
 
-function Player({login, name, status, setParticipantList, participantList, sir_name}) {
+function Player({login, name, status, participantList, sir_name}) {
+
   function handleDeleteUser() {
-    let copy = [...participantList]
-    copy.map((elem, index) => {
-      if (login === elem.login) {
-        copy.splice(index, 1);
-      }
-    })
-    setParticipantList(copy);
+
+    const {actions} = store;
+    // let copy = [...participantList]
+    // copy.map((elem, index) => {
+    //   if (login === elem.login) {
+    //     copy.splice(index, 1);
+    //   }
+    // })
+    // console.log(copy);
+    // participantList = [...copy];
+    actions.decrease();
   }
 
   return (<>
@@ -63,7 +69,9 @@ function Player({login, name, status, setParticipantList, participantList, sir_n
         </Text>
         <TouchableOpacity onPress={handleDeleteUser}>
           <View style={{marginTop: 8}}>
-          <FontAwesomeIcon color={'#9a9a9a'} icon={faXmark} size={24}/>
+            {
+              sir_name.includes('Вы') ? <FontAwesomeIcon color={'#9a9a9a'} icon={faXmark} size={24}/> : null
+            }
           </View>
         </TouchableOpacity>
       </View>
@@ -85,30 +93,12 @@ function Player({login, name, status, setParticipantList, participantList, sir_n
 
 const TeamSpecified = () => {
   const [newParticipant, setNewParticipant] = React.useState("");
-  const [teamName, setNewTeamName] = React.useState("");
-  const [participantList, setParticipantList] = React.useState([
-    {
-      login: 'nik',
-      name: 'Nikita',
-      sir_name: 'Mastinen'
-    },
-    {
-      login: 'alf',
-      name: 'Alfred',
-      sir_name: 'Nurtdinov'
-    },
-    {
-      login: 'den',
-      name: 'Denis',
-      sir_name: 'Zierpka'
-    }
-  ]);
+  const [teamName, setNewTeamName] = React.useState(store.getState().team);
+
+
 
   return (
     <>
-      <Text style={{fontSize: 16, color: '#000000', marginLeft: 16}}>
-        Чтобы продолжить регистрироваться, нужно подтвердить или отклонить заявки участников из других команд.
-      </Text>
 
       <View style={{
         ...styles.container, ...styles.shadow, marginTop: 8, padding: 16, display: 'flex',
@@ -133,15 +123,29 @@ const TeamSpecified = () => {
           onChangeText={setNewTeamName}
           value={teamName}
 
-          placeholder="Пригласить участника"
+          placeholder="Придумайте название команды"
         />
       </View>
 
+      <Text style={{fontSize: 16, color: '#000000', marginLeft: 16, marginTop: 8, marginBottom: 8}}>
+        Чтобы другим участникам зарегистрироваться, им необходимо перейти по ссылке ниже.
+      </Text>
+
       <View style={{
         ...styles.container, ...styles.shadow, marginTop: 8, padding: 16, display: 'flex',
+        flexDirection: 'column', justifyContent: 'space-between'
+      }}>
+      <Text style={{
+        fontSize: 20,
+        fontWeight: "600",
+        marginBottom: 16,
+      }}>Ссылка-приглашение</Text>
+      <View style={{
+        display: 'flex',
         flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'
       }}>
-        <TextInput
+
+        <Text
           style={{
             padding: 16,
             fontSize: 16,
@@ -149,37 +153,39 @@ const TeamSpecified = () => {
             borderWidth: 1,
             borderColor: 'lightgrey',
             width: '100%',
-            marginRight: -40,
           }}
           onChangeText={setNewParticipant}
           value={newParticipant}
           placeholder="Пригласить участников"
-        ></TextInput>
-        <View style={{width: 40, height: 32, alignItems: 'center', alignContent: 'center', justifyContent: 'center'}}>
-          <FontAwesomeIcon icon={faMagnifyingGlass} size={24} color={'#737373'}/>
+        >{'exp://192.168.1.63:19000/?23244'}
+        </Text>
+        <View style={{marginLeft: -40, width: 40, height: 32, alignItems: 'center', alignContent: 'center', justifyContent: 'center'}}>
+          <FontAwesomeIcon icon={faCopy} size={24} color={'#737373'}/>
         </View>
       </View>
-
-
-      <View style={{
-        ...styles.container, marginTop: 8, paddingTop: 16,
-        paddingBottom: 16, paddingLeft: 16, paddingRight: 8
-      }}>
-        {
-          participantList.map((elem, index) => {
-           return (
-             <Player
-               key={index}
-               {...elem}
-               participantList={participantList}
-               setParticipantList={setParticipantList}
-             />
-            );
-          })
-        }
-
-        {/*</SafeAreaView>*/}
       </View>
+
+
+      {
+        store.getState().participantList.length === 0 ? null : <View style={{
+          ...styles.container, marginTop: 8, paddingTop: 16,
+          paddingBottom: 16, paddingLeft: 16, paddingRight: 8
+        }}>
+          {
+            store.getState().participantList.map((elem, index) => {
+              return (
+                <Player
+                  key={index}
+                  {...elem}
+                  participantList={participantList}
+                />
+              );
+            })
+          }
+
+          {/*</SafeAreaView>*/}
+        </View>
+      }
       <TouchableHighlight
         style={{
           height: 40,
@@ -292,8 +298,7 @@ const LotOfTeams = () => {
 function EventRegistrationScreen({ route, navigation }) {
   const { item, creds } = route.params;
   const {scrollHandler} = useInputScrollHandler({extraScrollHeight: 64});
-
-
+  const [tpClicked, setTpClicked] = useState(false);
   return (
 
     <TouchableWithoutFeedback>
@@ -313,8 +318,24 @@ function EventRegistrationScreen({ route, navigation }) {
         <Text style={{margin: 16, fontWeight: "bold", fontSize: 24, color: '#000000'}}>
           Регистрация
         </Text>
-        {/*<LotOfTeams/>*/}
-        <TeamSpecified/>
+        {/*{*/}
+        {
+          !tpClicked && store.getState().participantList.length === 0 ? <TouchableHighlight
+            style={{
+              borderRadius: 12,
+              backgroundColor: "#109696",
+              marginBottom: 16,
+              marginTop: 16,
+              width: '100%',
+              alignSelf: 'center'
+            }}>
+
+            <Button title={'УЧАСТВОВАТЬ'} color={'white'} onPress={() => setTpClicked(true)}></Button>
+
+          </TouchableHighlight> : null
+        }
+
+        {tpClicked || store.getState().participantList.length !== 0 ? <TeamSpecified/> : null}
       </ScrollView>
     </TouchableWithoutFeedback>
   );
